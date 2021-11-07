@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>dim_karyawan</name>
+    <name>dim_payment</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -428,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2021/11/07 20:57:39.042</created_date>
+    <created_date>2021/11/07 22:49:04.471</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/11/07 20:57:39.042</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2021/11/07 22:49:04.471</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -476,44 +475,24 @@
   </connection>
   <order>
     <hop>
-      <from>tbl_employees</from>
-      <to>office-employee</to>
+      <from>tbl_payment</from>
+      <to>sk_payment</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>tbl_offices</from>
-      <to>office-employee</to>
+      <from>sk_payment</from>
+      <to>order</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>office-employee</from>
-      <to>nama_karyawan</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>nama_karyawan</from>
-      <to>seleksi_kolom</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>seleksi_kolom</from>
-      <to>sk_karyawan</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>sk_karyawan</from>
-      <to>atur_field</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>atur_field</from>
+      <from>order</from>
       <to>Insert / update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>atur_field</name>
-    <type>SelectValues</type>
+    <name>tbl_payment</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -522,33 +501,19 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <name>sk_karyawan</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nama_karyawan</name>
-        <rename/>
-      </field>
-      <field>
-        <name>jobTitle</name>
-        <rename/>
-      </field>
-      <field>
-        <name>country</name>
-        <rename/>
-      </field>
-      <field>
-        <name>city</name>
-        <rename/>
-      </field>
-      <field>
-        <name>employeeNumber</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
+    <connection>conn_minimart</connection>
+    <sql>SELECT
+  customerNumber
+, checkNumber
+, paymentDate
+, amount
+FROM payments
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -558,195 +523,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>752</xloc>
-      <yloc>304</yloc>
+      <xloc>112</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>nama_karyawan</name>
-    <type>ConcatFields</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator> </separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>file</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>firstName</name>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>lastName</name>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <ConcatFields>
-      <targetFieldName>nama_karyawan</targetFieldName>
-      <targetFieldLength>0</targetFieldLength>
-      <removeSelectedFields>N</removeSelectedFields>
-    </ConcatFields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>208</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>office-employee</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>tbl_offices</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>officeCode</name>
-        <field>officeCode</field>
-      </key>
-      <value>
-        <name>city</name>
-        <rename>city</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>country</name>
-        <rename>country</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>seleksi_kolom</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>nama_karyawan</name>
-        <rename/>
-      </field>
-      <field>
-        <name>jobTitle</name>
-        <rename/>
-      </field>
-      <field>
-        <name>country</name>
-        <rename/>
-      </field>
-      <field>
-        <name>city</name>
-        <rename/>
-      </field>
-      <field>
-        <name>employeeNumber</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>304</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>sk_karyawan</name>
+    <name>sk_payment</name>
     <type>Sequence</type>
     <description/>
     <distribute>Y</distribute>
@@ -756,9 +539,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <valuename>sk_karyawan</valuename>
+    <valuename>sk_payment</valuename>
     <use_database>N</use_database>
-    <connection/>
+    <connection>conn_minimart</connection>
     <schema/>
     <seqname>SEQ_</seqname>
     <use_counter>Y</use_counter>
@@ -775,14 +558,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>304</yloc>
+      <xloc>336</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>tbl_employees</name>
-    <type>TableInput</type>
+    <name>order</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -791,23 +574,29 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>conn_minimart</connection>
-    <sql>SELECT
-  employeeNumber
-, lastName
-, firstName
-, extension
-, email
-, officeCode
-, reportsTo
-, jobTitle
-FROM employees
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <fields>
+      <field>
+        <name>sk_payment</name>
+        <rename/>
+      </field>
+      <field>
+        <name>customerNumber</name>
+        <rename/>
+      </field>
+      <field>
+        <name>checkNumber</name>
+        <rename/>
+      </field>
+      <field>
+        <name>paymentDate</name>
+        <rename/>
+      </field>
+      <field>
+        <name>amount</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -817,51 +606,8 @@ FROM employees
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>tbl_offices</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>conn_minimart</connection>
-    <sql>SELECT
-  officeCode
-, city
-, phone
-, addressLine1
-, addressLine2
-, state
-, country
-, postalCode
-, territory
-FROM offices
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>64</yloc>
+      <xloc>544</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -881,41 +627,36 @@ FROM offices
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema/>
-      <table>dim_karyawan</table>
+      <table>dim_payment</table>
       <key>
-        <name>sk_karyawan</name>
-        <field>sk_karyawan</field>
+        <name>sk_payment</name>
+        <field>sk_payment</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>sk_karyawan</name>
-        <rename>sk_karyawan</rename>
+        <name>sk_payment</name>
+        <rename>sk_payment</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>nama_karyawan</name>
-        <rename>nama_karyawan</rename>
+        <name>customerNumber</name>
+        <rename>customerNumber</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>jobTitle</name>
-        <rename>jobTitle</rename>
+        <name>checkNumber</name>
+        <rename>checkNumber</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>country</name>
-        <rename>country</rename>
+        <name>paymentDate</name>
+        <rename>paymentDate</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>city</name>
-        <rename>city</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>employeeNumber</name>
-        <rename>employeeNumber</rename>
+        <name>amount</name>
+        <rename>amount</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -928,8 +669,8 @@ FROM offices
       </output>
     </remotesteps>
     <GUI>
-      <xloc>880</xloc>
-      <yloc>304</yloc>
+      <xloc>672</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
